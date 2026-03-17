@@ -17,7 +17,6 @@ const isScrolled = computed(() => y.value > 20)
 
 const isMobileMenuOpen = ref(false)
 const isSearchOpen = ref(false)
-const isRegionOpen = ref(false)
 const searchQuery = ref('')
 const bannerClosed = ref(localStorage.getItem('banner_closed') === '1')
 
@@ -65,27 +64,10 @@ function isActiveRoute(path: string) {
     <!-- Top bar -->
     <div class="border-b border-border/50 hidden md:block">
       <div class="container-custom flex items-center justify-between py-2 text-sm">
-        <!-- Region selector -->
-        <div class="relative">
-          <button
-            @click="isRegionOpen = !isRegionOpen"
-            class="flex items-center gap-1 text-textSecondary hover:text-primary transition-colors"
-            :aria-expanded="isRegionOpen"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            {{ regionStore.currentRegion.name }}
-            <svg :class="['w-4 h-4 transition-transform', isRegionOpen ? 'rotate-180' : '']" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-          </button>
-          <Transition name="dropdown">
-            <div v-if="isRegionOpen" class="absolute top-full left-0 mt-1 bg-white border border-border rounded-card shadow-card w-48 z-50 py-1">
-              <button
-                v-for="region in regionStore.allRegions"
-                :key="region.id"
-                @click="() => { regionStore.setRegion(region); isRegionOpen = false }"
-                :class="['w-full text-left px-4 py-2 text-sm hover:bg-primary-50 hover:text-primary transition-colors', region.id === regionStore.currentRegion.id ? 'text-primary font-semibold' : 'text-textPrimary']"
-              >{{ region.name }}</button>
-            </div>
-          </Transition>
+        <!-- City -->
+        <div class="flex items-center gap-1 text-textSecondary">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Томск
         </div>
 
         <!-- Right: phone + actions -->
@@ -98,11 +80,6 @@ function isActiveRoute(path: string) {
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
             Личный кабинет
           </button>
-          <div class="flex items-center gap-1 border border-border rounded px-2 py-0.5">
-            <button class="font-medium text-primary">RU</button>
-            <span class="text-border">/</span>
-            <button class="font-medium text-textSecondary hover:text-primary transition-colors">EN</button>
-          </div>
         </div>
       </div>
     </div>

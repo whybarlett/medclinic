@@ -17,7 +17,7 @@ const regionStore = useRegionStore()
             <span class="font-bold text-xl">МедЦентр</span>
           </div>
           <p class="text-white/60 text-sm leading-relaxed mb-4">
-            Сеть современных медицинских клиник. Более 60 клиник, 1500+ врачей, 1 миллион пациентов.
+            Сеть современных медицинских клиник в Томске. 5 клиник, 20+ врачей, тысячи пациентов.
           </p>
           <a :href="`tel:${regionStore.currentRegion.phone}`" class="text-secondary font-semibold text-lg hover:text-secondary-light transition-colors">
             {{ regionStore.currentRegion.phone }}

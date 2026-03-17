@@ -6,7 +6,7 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'home',
     component: () => import('../pages/HomePage.vue'),
-    meta: { title: 'МедЦентр — Сеть медицинских клиник', description: 'Лучшие врачи Москвы. Онлайн-запись, современное оборудование, 60+ клиник.' },
+    meta: { title: 'МедЦентр — Сеть медицинских клиник', description: 'Лучшие врачи Томска. Онлайн-запись, современное оборудование.' },
   },
   {
     path: '/services',
