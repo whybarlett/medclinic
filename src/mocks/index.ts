@@ -1,4 +1,4 @@
-import type { Clinic } from '../types/index'
+import type { Clinic, Service } from '../types/index'
 
 export const mockClinics: Clinic[] = [
   {
@@ -89,6 +89,63 @@ export const mockServiceCategories = [
   { id: 8, name: 'Хирургия', slug: 'surgery', icon: '⚕️', servicesCount: 35, color: '#003D9C' },
   { id: 9, name: 'Онкология', slug: 'oncology', icon: '🎗️', servicesCount: 19, color: '#6B7280' },
   { id: 10, name: 'Реабилитация', slug: 'rehabilitation', icon: '💪', servicesCount: 22, color: '#F2C94C' },
+]
+
+export const mockServices: Service[] = [
+  // Диагностика (categoryId: 1)
+  { id: 1, slug: 'priem-terapevta', name: 'Приём терапевта', categoryId: 1, categoryName: 'Диагностика', description: 'Первичный осмотр, сбор анамнеза, назначение обследований и лечения.', price: 2200, duration: 30, icon: '🩺', isPopular: true },
+  { id: 2, slug: 'ekg', name: 'ЭКГ', categoryId: 1, categoryName: 'Диагностика', description: 'Электрокардиография — оценка работы сердца, выявление аритмий и нарушений.', price: 1500, duration: 20, icon: '📈', isPopular: true },
+  { id: 3, slug: 'eeg', name: 'ЭЭГ', categoryId: 1, categoryName: 'Диагностика', description: 'Электроэнцефалография — исследование электрической активности головного мозга.', price: 3200, duration: 40, icon: '🧠', isPopular: false },
+  { id: 4, slug: 'rentgen', name: 'Рентгенография', categoryId: 1, categoryName: 'Диагностика', description: 'Рентген грудной клетки, костей и суставов с цифровым описанием.', price: 1800, duration: 15, icon: '📷', isPopular: false },
+  { id: 5, slug: 'flyuorografiya', name: 'Флюорография', categoryId: 1, categoryName: 'Диагностика', description: 'Профилактическое обследование лёгких. Результат в день обращения.', price: 900, duration: 10, icon: '🫁', isPopular: true },
+
+  // УЗИ (categoryId: 2)
+  { id: 6, slug: 'uzi-brushnoy-polosti', name: 'УЗИ брюшной полости', categoryId: 2, categoryName: 'УЗИ', description: 'Комплексное УЗИ: печень, желчный пузырь, поджелудочная железа, селезёнка.', price: 2800, duration: 30, icon: '📡', isPopular: true },
+  { id: 7, slug: 'uzi-schitovidnoy-zhelezy', name: 'УЗИ щитовидной железы', categoryId: 2, categoryName: 'УЗИ', description: 'Ультразвуковое исследование щитовидной железы с оценкой структуры и размеров.', price: 1800, duration: 20, icon: '📡', isPopular: false },
+  { id: 8, slug: 'uzi-pochek', name: 'УЗИ почек и мочевого пузыря', categoryId: 2, categoryName: 'УЗИ', description: 'Оценка состояния почек, надпочечников и мочевого пузыря.', price: 2200, duration: 25, icon: '📡', isPopular: false },
+  { id: 9, slug: 'uzi-malogo-taza', name: 'УЗИ малого таза', categoryId: 2, categoryName: 'УЗИ', description: 'Диагностика органов малого таза. Трансабдоминальное и трансвагинальное исследование.', price: 2500, duration: 25, icon: '📡', isPopular: true },
+  { id: 10, slug: 'uzi-serdca', name: 'ЭХОКГ (УЗИ сердца)', categoryId: 2, categoryName: 'УЗИ', description: 'Ультразвуковое исследование сердца — оценка клапанов, камер и сократимости.', price: 3500, duration: 30, icon: '📡', isPopular: true },
+
+  // МРТ / КТ (categoryId: 3)
+  { id: 11, slug: 'mrt-golovnogo-mozga', name: 'МРТ головного мозга', categoryId: 3, categoryName: 'МРТ / КТ', description: 'Магнитно-резонансная томография головного мозга на томографе 3 Тесла.', price: 4500, duration: 40, icon: '🧲', isPopular: true },
+  { id: 12, slug: 'mrt-pozvonochnika', name: 'МРТ позвоночника', categoryId: 3, categoryName: 'МРТ / КТ', description: 'МРТ шейного, грудного или поясничного отдела позвоночника.', price: 4800, duration: 40, icon: '🧲', isPopular: true },
+  { id: 13, slug: 'kt-legkikh', name: 'КТ лёгких', categoryId: 3, categoryName: 'МРТ / КТ', description: 'Компьютерная томография органов грудной клетки с описанием.', price: 4000, duration: 20, icon: '🧲', isPopular: false },
+  { id: 14, slug: 'mrt-sustavov', name: 'МРТ суставов', categoryId: 3, categoryName: 'МРТ / КТ', description: 'МРТ коленного, плечевого, тазобедренного или голеностопного сустава.', price: 5200, duration: 45, icon: '🧲', isPopular: false },
+
+  // Анализы (categoryId: 4)
+  { id: 15, slug: 'obshchiy-analiz-krovi', name: 'Общий анализ крови', categoryId: 4, categoryName: 'Анализы', description: 'Клинический анализ крови с лейкоцитарной формулой и СОЭ.', price: 650, duration: 5, icon: '🧪', isPopular: true },
+  { id: 16, slug: 'biokhimiya-krovi', name: 'Биохимия крови', categoryId: 4, categoryName: 'Анализы', description: 'Расширенный биохимический анализ: глюкоза, холестерин, печёночные ферменты и др.', price: 2400, duration: 5, icon: '🧪', isPopular: true },
+  { id: 17, slug: 'gormony-schitovidnoy', name: 'Гормоны щитовидной железы', categoryId: 4, categoryName: 'Анализы', description: 'ТТГ, Т3 свободный, Т4 свободный — комплексная оценка функции щитовидной железы.', price: 1800, duration: 5, icon: '🧪', isPopular: false },
+  { id: 18, slug: 'obshchiy-analiz-mochi', name: 'Общий анализ мочи', categoryId: 4, categoryName: 'Анализы', description: 'Общеклинический анализ мочи с микроскопией осадка.', price: 450, duration: 5, icon: '🧪', isPopular: false },
+  { id: 19, slug: 'koagulogramma', name: 'Коагулограмма', categoryId: 4, categoryName: 'Анализы', description: 'Исследование системы свёртывания крови: ПТИ, фибриноген, АЧТВ, МНО.', price: 1600, duration: 5, icon: '🧪', isPopular: false },
+
+  // Педиатрия (categoryId: 5)
+  { id: 20, slug: 'priem-pediatra', name: 'Приём педиатра', categoryId: 5, categoryName: 'Педиатрия', description: 'Осмотр ребёнка, оценка развития, назначение лечения и профилактические рекомендации.', price: 2000, duration: 30, icon: '👶', isPopular: true },
+  { id: 21, slug: 'vakcinaciya-detey', name: 'Вакцинация детей', categoryId: 5, categoryName: 'Педиатрия', description: 'Прививки по национальному календарю и дополнительная вакцинация.', price: 1500, duration: 20, icon: '💉', isPopular: true },
+  { id: 22, slug: 'dispanserizaciya-detey', name: 'Диспансеризация детей', categoryId: 5, categoryName: 'Педиатрия', description: 'Комплексный осмотр специалистов + анализы для детского сада или школы.', price: 5500, duration: 120, icon: '📋', isPopular: false },
+
+  // Стоматология (categoryId: 6)
+  { id: 23, slug: 'priem-stomatologa', name: 'Приём стоматолога', categoryId: 6, categoryName: 'Стоматология', description: 'Осмотр полости рта, консультация по лечению и профилактике заболеваний зубов.', price: 1200, duration: 30, icon: '🦷', isPopular: true },
+  { id: 24, slug: 'chistka-zubov', name: 'Профессиональная чистка зубов', categoryId: 6, categoryName: 'Стоматология', description: 'Ультразвуковая чистка + Air Flow + полировка + фторирование.', price: 4500, duration: 60, icon: '✨', isPopular: true },
+  { id: 25, slug: 'lechenie-kariesa', name: 'Лечение кариеса', categoryId: 6, categoryName: 'Стоматология', description: 'Лечение кариеса с установкой пломбы из светоотверждаемого композита.', price: 3800, duration: 45, icon: '🦷', isPopular: false },
+
+  // Кардиология (categoryId: 7)
+  { id: 26, slug: 'priem-kardiologa', name: 'Приём кардиолога', categoryId: 7, categoryName: 'Кардиология', description: 'Консультация кардиолога, оценка сердечно-сосудистой системы, назначение обследований.', price: 3200, duration: 30, icon: '❤️', isPopular: true },
+  { id: 27, slug: 'holter-monitoring', name: 'Холтеровское мониторирование', categoryId: 7, categoryName: 'Кардиология', description: 'Суточное мониторирование ЭКГ для выявления аритмий и ишемии.', price: 3800, duration: 15, icon: '📊', isPopular: false },
+  { id: 28, slug: 'smad', name: 'СМАД', categoryId: 7, categoryName: 'Кардиология', description: 'Суточное мониторирование артериального давления с расшифровкой.', price: 3000, duration: 15, icon: '📊', isPopular: false },
+
+  // Хирургия (categoryId: 8)
+  { id: 29, slug: 'priem-khirurga', name: 'Приём хирурга', categoryId: 8, categoryName: 'Хирургия', description: 'Консультация хирурга, осмотр, определение показаний к оперативному лечению.', price: 2500, duration: 30, icon: '⚕️', isPopular: true },
+  { id: 30, slug: 'udalenie-novoobrazovaniy', name: 'Удаление новообразований', categoryId: 8, categoryName: 'Хирургия', description: 'Удаление папиллом, родинок и бородавок радиоволновым методом.', price: 2000, duration: 20, icon: '⚕️', isPopular: false },
+
+  // Онкология (categoryId: 9)
+  { id: 31, slug: 'priem-onkologa', name: 'Приём онколога', categoryId: 9, categoryName: 'Онкология', description: 'Консультация онколога, осмотр, назначение дообследования и тактики лечения.', price: 3500, duration: 40, icon: '🎗️', isPopular: false },
+  { id: 32, slug: 'onkomarkery', name: 'Анализ на онкомаркеры', categoryId: 9, categoryName: 'Онкология', description: 'Определение уровня основных онкомаркеров: ПСА, СА-125, СА 15-3, РЭА.', price: 3200, duration: 5, icon: '🧪', isPopular: false },
+
+  // Реабилитация (categoryId: 10)
+  { id: 33, slug: 'lfk', name: 'ЛФК (лечебная физкультура)', categoryId: 10, categoryName: 'Реабилитация', description: 'Индивидуальные занятия с инструктором по лечебной физкультуре.', price: 2000, duration: 45, icon: '💪', isPopular: false },
+  { id: 34, slug: 'massazh-lechebniy', name: 'Лечебный массаж', categoryId: 10, categoryName: 'Реабилитация', description: 'Массаж спины, шейно-воротниковой зоны или общий лечебный массаж.', price: 2500, duration: 45, icon: '🤲', isPopular: true },
+  { id: 35, slug: 'fizioterapiya', name: 'Физиотерапия', categoryId: 10, categoryName: 'Реабилитация', description: 'Магнитотерапия, электрофорез, лазеротерапия и другие физиопроцедуры.', price: 1500, duration: 30, icon: '⚡', isPopular: false },
 ]
 
 export const mockActions = [

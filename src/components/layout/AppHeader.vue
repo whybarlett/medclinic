@@ -4,6 +4,7 @@ import { useScroll } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
 import { useRegionStore } from '../../stores/useRegionStore'
 import { useAppointmentStore } from '../../stores/useAppointmentStore'
+import { mockServiceCategories } from '../../mocks/index'
 import AppButton from '../ui/AppButton.vue'
 import MobileMenu from './MobileMenu.vue'
 
@@ -17,8 +18,18 @@ const isScrolled = computed(() => y.value > 20)
 
 const isMobileMenuOpen = ref(false)
 const isSearchOpen = ref(false)
+const isServicesMegaOpen = ref(false)
 const searchQuery = ref('')
 const bannerClosed = ref(localStorage.getItem('banner_closed') === '1')
+
+let megaTimer: ReturnType<typeof setTimeout> | null = null
+function openMega() {
+  if (megaTimer) clearTimeout(megaTimer)
+  isServicesMegaOpen.value = true
+}
+function closeMegaDelayed() {
+  megaTimer = setTimeout(() => { isServicesMegaOpen.value = false }, 150)
+}
 
 const navLinks = [
   { label: 'Услуги', to: '/services', hasMega: true },
@@ -100,13 +111,62 @@ function isActiveRoute(path: string) {
       <!-- Desktop nav -->
       <nav class="hidden lg:flex items-center gap-1">
         <template v-for="link in navLinks" :key="link.to">
+          <!-- Services with mega menu -->
+          <div
+            v-if="link.to === '/services'"
+            class="relative"
+            @mouseenter="openMega"
+            @mouseleave="closeMegaDelayed"
+          >
+            <RouterLink
+              :to="link.to"
+              :class="['px-3 py-2 rounded-btn text-sm font-medium transition-colors flex items-center gap-1',
+                isActiveRoute(link.to) || isServicesMegaOpen ? 'text-primary bg-primary-50' : 'text-textPrimary hover:text-primary hover:bg-gray-50']"
+            >
+              {{ link.label }}
+              <svg :class="['w-3.5 h-3.5 transition-transform', isServicesMegaOpen ? 'rotate-180' : '']" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </RouterLink>
+            <Transition name="dropdown">
+              <div
+                v-if="isServicesMegaOpen"
+                class="absolute top-full left-0 mt-1 bg-white border border-border rounded-card shadow-card w-[520px] z-50 p-4"
+                @mouseenter="openMega"
+                @mouseleave="closeMegaDelayed"
+              >
+                <div class="grid grid-cols-2 gap-1">
+                  <RouterLink
+                    v-for="cat in mockServiceCategories"
+                    :key="cat.id"
+                    :to="`/services?cat=${cat.slug}`"
+                    @click="isServicesMegaOpen = false"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-btn hover:bg-primary-50 transition-colors group"
+                  >
+                    <div
+                      class="w-9 h-9 rounded-lg flex items-center justify-center text-lg flex-shrink-0"
+                      :style="{ backgroundColor: cat.color + '18' }"
+                    >{{ cat.icon }}</div>
+                    <div>
+                      <div class="text-sm font-semibold text-textPrimary group-hover:text-primary transition-colors">{{ cat.name }}</div>
+                      <div class="text-xs text-textSecondary">{{ cat.servicesCount }} услуг</div>
+                    </div>
+                  </RouterLink>
+                </div>
+                <div class="border-t border-border mt-3 pt-3">
+                  <RouterLink to="/services" @click="isServicesMegaOpen = false" class="text-sm font-semibold text-primary hover:underline">
+                    Смотреть все услуги →
+                  </RouterLink>
+                </div>
+              </div>
+            </Transition>
+          </div>
+          <!-- Regular link -->
           <RouterLink
+            v-else
             :to="link.to"
             :class="['px-3 py-2 rounded-btn text-sm font-medium transition-colors flex items-center gap-1',
               isActiveRoute(link.to) ? 'text-primary bg-primary-50' : 'text-textPrimary hover:text-primary hover:bg-gray-50']"
           >
             {{ link.label }}
-            <svg v-if="link.hasMega" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </RouterLink>
         </template>
       </nav>
