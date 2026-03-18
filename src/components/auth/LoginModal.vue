@@ -65,9 +65,6 @@ function switchMode(m: 'login' | 'register') {
           <h2 class="text-xl font-bold text-textPrimary">
             {{ mode === 'login' ? 'Вход в кабинет' : 'Регистрация' }}
           </h2>
-          <button @click="userStore.closeLoginModal" class="p-2 rounded-lg hover:bg-gray-100 text-textSecondary">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
         </div>
         <!-- Mode tabs -->
         <div class="flex mt-4 bg-gray-100 rounded-input p-1">
