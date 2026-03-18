@@ -97,9 +97,9 @@ function doSearch() {
     </Swiper>
 
     <!-- Floating search box -->
-    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 z-20">
-      <div class="container-custom pb-6">
-        <div class="bg-white/95 backdrop-blur-sm rounded-card shadow-2xl p-4 max-w-3xl">
+    <div class="absolute bottom-5 left-0 right-0 z-20">
+      <div class="container-custom">
+        <div class="bg-white/95 backdrop-blur-sm rounded-card shadow-2xl p-4 max-w-2xl">
           <div class="flex flex-col sm:flex-row gap-3">
             <div class="flex-1 flex items-center gap-3 bg-gray-50 rounded-input px-4 py-3 border border-border">
               <svg class="w-5 h-5 text-textSecondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
