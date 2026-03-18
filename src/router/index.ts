@@ -87,6 +87,12 @@ const routes: RouteRecordRaw[] = [
     meta: { title: 'Контакты — МедЦентр' },
   },
   {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('../pages/AdminPage.vue'),
+    meta: { title: 'Панель администратора — МедЦентр' },
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: () => import('../pages/NotFoundPage.vue'),
