@@ -149,3 +149,21 @@
 .leaflet-popup {
   z-index: 20;
 }
+
+/* Leaflet attribution — минимальный вид */
+.leaflet-control-attribution {
+  font-size: 10px !important;
+  opacity: 0.5 !important;
+  background: rgba(255,255,255,0.7) !important;
+  padding: 1px 5px !important;
+}
+.leaflet-control-attribution:hover {
+  opacity: 0.9 !important;
+}
+/* Скрыть логотип Leaflet, оставить только © OSM */
+.leaflet-control-attribution .leaflet-attribution-flag {
+  display: none !important;
+}
+a.leaflet-attribution-flag + span {
+  display: none !important;
+}
