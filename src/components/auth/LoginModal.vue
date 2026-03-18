@@ -58,16 +58,20 @@ function switchMode(m: 'login' | 'register') {
 </script>
 
 <template>
-  <AppModal :open="userStore.isLoginModalOpen" @close="userStore.closeLoginModal" size="sm">
+  <AppModal :open="userStore.isLoginModalOpen" @close="userStore.closeLoginModal" size="sm" :show-close="false">
     <template #header>
       <div class="w-full">
-        <div class="flex items-center justify-between">
+        <!-- Заголовок + крестик на одной строке -->
+        <div class="flex items-center justify-between mb-4">
           <h2 class="text-xl font-bold text-textPrimary">
             {{ mode === 'login' ? 'Вход в кабинет' : 'Регистрация' }}
           </h2>
+          <button @click="userStore.closeLoginModal" class="p-2 rounded-lg hover:bg-gray-100 text-textSecondary transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
         </div>
-        <!-- Mode tabs -->
-        <div class="flex mt-4 bg-gray-100 rounded-input p-1">
+        <!-- Табы на всю ширину -->
+        <div class="flex w-full bg-gray-100 rounded-input p-1">
           <button
             @click="switchMode('login')"
             :class="['flex-1 py-2 text-sm font-semibold rounded-btn transition-all', mode === 'login' ? 'bg-white text-primary shadow-sm' : 'text-textSecondary hover:text-textPrimary']"

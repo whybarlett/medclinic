@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
 
-const props = defineProps<{ open: boolean; title?: string; size?: 'sm' | 'md' | 'lg' | 'xl' }>()
+const props = defineProps<{ open: boolean; title?: string; size?: 'sm' | 'md' | 'lg' | 'xl'; showClose?: boolean }>()
 const emit = defineEmits<{ close: [] }>()
 
 function onKeydown(e: KeyboardEvent) {
@@ -29,7 +29,7 @@ onUnmounted(() => document.removeEventListener('keydown', onKeydown))
             <slot name="header">
               <h2 id="modal-title" class="text-xl font-bold text-textPrimary">{{ title }}</h2>
             </slot>
-            <button @click="emit('close')" class="p-2 rounded-lg hover:bg-gray-100 transition-colors text-textSecondary hover:text-textPrimary" aria-label="Закрыть">
+            <button v-if="showClose !== false" @click="emit('close')" class="p-2 rounded-lg hover:bg-gray-100 transition-colors text-textSecondary hover:text-textPrimary" aria-label="Закрыть">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
           </div>
