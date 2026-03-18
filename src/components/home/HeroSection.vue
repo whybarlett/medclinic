@@ -79,8 +79,8 @@ function doSearch() {
         </div>
         <!-- Content -->
         <div class="relative z-10 h-full flex items-center">
-          <div class="container-custom">
-            <div class="max-w-2xl">
+          <div class="container-custom w-full">
+            <div class="max-w-2xl pb-36 md:pb-40">
               <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 text-balance">
                 {{ slide.title }}
               </h1>
