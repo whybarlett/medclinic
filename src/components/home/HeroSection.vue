@@ -80,7 +80,7 @@ function doSearch() {
         <!-- Content -->
         <div class="relative z-10 h-full flex items-center">
           <div class="container-custom w-full">
-            <div class="max-w-2xl pb-36 md:pb-40">
+            <div class="max-w-2xl pb-24 md:pb-28">
               <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 text-balance">
                 {{ slide.title }}
               </h1>
@@ -97,8 +97,8 @@ function doSearch() {
     </Swiper>
 
     <!-- Floating search box -->
-    <div class="absolute bottom-5 left-0 right-0 z-20">
-      <div class="container-custom">
+    <div class="absolute bottom-0 left-0 right-0 z-20">
+      <div class="container-custom pb-4">
         <div class="bg-white/95 backdrop-blur-sm rounded-card shadow-2xl p-4 max-w-2xl">
           <div class="flex flex-col sm:flex-row gap-3">
             <div class="flex-1 flex items-center gap-3 bg-gray-50 rounded-input px-4 py-3 border border-border">
