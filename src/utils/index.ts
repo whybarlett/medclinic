@@ -9,16 +9,20 @@ export function formatPhone(raw: string): string {
 }
 
 export function maskPhone(value: string): string {
-  const digits = value.replace(/\D/g, '').slice(0, 11)
-  let result = ''
-  for (let i = 0; i < digits.length; i++) {
-    if (i === 0) result = '+7'
-    else if (i === 1) result += ` (${digits[i]}`
-    else if (i === 3) result += `) ${digits[i]}`
-    else if (i === 6) result += `-${digits[i]}`
-    else if (i === 8) result += `-${digits[i]}`
-    else result += digits[i]
-  }
+  // Оставляем только цифры, убираем ведущую 7 или 8 если есть
+  let digits = value.replace(/\D/g, '')
+  if (digits.startsWith('8')) digits = '7' + digits.slice(1)
+  if (!digits.startsWith('7')) digits = '7' + digits
+  digits = digits.slice(0, 11) // максимум 11 цифр включая 7
+
+  // d[0]=7, d[1-3]=код, d[4-6]=XXX, d[7-8]=XX, d[9-10]=XX
+  const d = digits
+  let result = '+7'
+  if (d.length > 1) result += ` (${d.slice(1, 4)}`
+  if (d.length > 4) result += `) ${d.slice(4, 7)}`
+  else if (d.length > 1) result += ')'
+  if (d.length > 7) result += `-${d.slice(7, 9)}`
+  if (d.length > 9) result += `-${d.slice(9, 11)}`
   return result
 }
 
