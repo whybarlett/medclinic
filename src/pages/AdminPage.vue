@@ -59,8 +59,8 @@ function openDoctorModal(doctor?: Doctor) {
   }
   doctorModal.value = true
 }
-function saveDoctor() {
-  admin.saveDoctor(editingDoctor.value as Doctor)
+async function saveDoctor() {
+  await admin.saveDoctor(editingDoctor.value as Doctor)
   doctorModal.value = false
 }
 function deleteDoctor(id: number) {
@@ -78,8 +78,8 @@ function openClinicModal(clinic?: Clinic) {
   }
   clinicModal.value = true
 }
-function saveClinic() {
-  admin.saveClinic(editingClinic.value as Clinic)
+async function saveClinic() {
+  await admin.saveClinic(editingClinic.value as Clinic)
   clinicModal.value = false
 }
 
@@ -94,19 +94,19 @@ function openActionModal(action?: Action) {
   }
   actionModal.value = true
 }
-function saveAction() {
+async function saveAction() {
   if (!editingAction.value.discountPercent && editingAction.value.originalPrice && editingAction.value.discountPrice) {
     editingAction.value.discountPercent = Math.round((1 - editingAction.value.discountPrice / editingAction.value.originalPrice) * 100)
   }
-  admin.saveAction(editingAction.value as Action)
+  await admin.saveAction(editingAction.value as Action)
   actionModal.value = false
 }
 
 // ── Настройки ──
 const editSettings = ref({ ...admin.siteSettings })
-function saveSettings() {
-  admin.saveSiteSettings(editSettings.value)
-  alert('Настройки сохранены!')
+async function saveSettings() {
+  await admin.saveSiteSettings(editSettings.value)
+  // toast shown via store saveSuccess('Настройки сохранены!')
 }
 
 const statusLabel: Record<string, string> = { upcoming: 'Предстоящий', completed: 'Завершён', cancelled: 'Отменён' }
@@ -614,7 +614,7 @@ const statusColor: Record<string, string> = {
           </div>
           <div class="px-6 py-4 border-t border-border flex gap-3 justify-end">
             <button @click="doctorModal = false" class="btn-outline text-sm py-2.5 px-6">Отмена</button>
-            <button @click="saveDoctor" class="btn-primary text-sm py-2.5 px-6">Сохранить</button>
+            <button @click="saveDoctor" :disabled="admin.isSaving" class="btn-primary text-sm py-2.5 px-6 inline-flex items-center gap-1.5"><span v-if="admin.isSaving" class="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Сохранить</button>
           </div>
         </div>
       </div>
@@ -660,7 +660,7 @@ const statusColor: Record<string, string> = {
           </div>
           <div class="px-6 py-4 border-t border-border flex gap-3 justify-end">
             <button @click="clinicModal = false" class="btn-outline text-sm py-2.5 px-6">Отмена</button>
-            <button @click="saveClinic" class="btn-primary text-sm py-2.5 px-6">Сохранить</button>
+            <button @click="saveClinic" :disabled="admin.isSaving" class="btn-primary text-sm py-2.5 px-6 inline-flex items-center gap-1.5"><span v-if="admin.isSaving" class="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Сохранить</button>
           </div>
         </div>
       </div>
@@ -710,7 +710,7 @@ const statusColor: Record<string, string> = {
           </div>
           <div class="px-6 py-4 border-t border-border flex gap-3 justify-end">
             <button @click="actionModal = false" class="btn-outline text-sm py-2.5 px-6">Отмена</button>
-            <button @click="saveAction" class="btn-primary text-sm py-2.5 px-6">Сохранить</button>
+            <button @click="saveAction" :disabled="admin.isSaving" class="btn-primary text-sm py-2.5 px-6 inline-flex items-center gap-1.5"><span v-if="admin.isSaving" class="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Сохранить</button>
           </div>
         </div>
       </div>

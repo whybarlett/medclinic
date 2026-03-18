@@ -53,7 +53,7 @@ if ($method === 'GET') {
     $apts = $stmt->fetchAll();
     foreach ($apts as &$a) { $a['price'] = (float)$a['price']; }
 
-    success(['appointments' => $apts, 'total' => $total]);
+    success(['appointments' => $apts, 'total' => $total, 'page' => $page, 'limit' => $limit, 'pages' => ceil($total / $limit)]);
 }
 
 // POST — создать запись (форма записи на приём)

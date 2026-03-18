@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useScroll } from '@vueuse/core'
+import { useRoute } from 'vue-router'
 import { useAppointmentStore } from '../../stores/useAppointmentStore'
 
 const store = useAppointmentStore()
+const route = useRoute()
+const isAdmin = computed(() => route.path.startsWith('/admin'))
 const { y } = useScroll(window)
 const showWidgets = computed(() => y.value > 400)
 
@@ -25,7 +28,7 @@ function scrollToTop() {
 <template>
   <!-- Floating appointment button -->
   <Transition name="float">
-    <div v-if="showWidgets" class="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-3">
+    <div v-if="showWidgets && !isAdmin" class="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-3">
       <!-- Back to top -->
       <button
         @click="scrollToTop"
@@ -47,7 +50,7 @@ function scrollToTop() {
 
   <!-- Cookie banner -->
   <Transition name="cookie">
-    <div v-if="!cookieAccepted" class="fixed bottom-0 left-0 right-0 z-40 p-4">
+    <div v-if="!cookieAccepted && !isAdmin" class="fixed bottom-0 left-0 right-0 z-40 p-4">
       <div class="max-w-3xl mx-auto bg-white border border-border rounded-card shadow-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div class="flex items-start gap-3 flex-1 min-w-0">
           <span class="text-2xl flex-shrink-0">🍪</span>

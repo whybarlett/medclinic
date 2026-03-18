@@ -44,7 +44,7 @@ const appointmentStore = useAppointmentStore()
         <span class="text-xs text-textSecondary">Приём от</span>
         <div class="font-bold text-textPrimary text-base">{{ doctor.price.toLocaleString('ru') }} ₽</div>
       </div>
-      <AppButton size="sm" @click="appointmentStore.openModal(doctor)">
+      <AppButton size="sm" @click.stop="appointmentStore.openModal(doctor)">
         Записаться
       </AppButton>
     </div>

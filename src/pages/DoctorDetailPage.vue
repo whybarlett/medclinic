@@ -51,6 +51,11 @@ const prices = [
   { service: 'Выезд на дом', price: 3000 },
   { service: 'Онлайн-консультация', price: -30 },
 ]
+
+const similarDoctors = computed(() => {
+  if (!doctor.value) return []
+  return doctorsStore.getTopDoctors(5).filter(d => d.id !== doctor.value!.id).slice(0, 2)
+})
 </script>
 
 <template>
@@ -377,7 +382,7 @@ const prices = [
               <h3 class="font-bold text-textPrimary mb-4 text-sm">Похожие специалисты</h3>
               <div class="space-y-3">
                 <RouterLink
-                  v-for="d in useDoctorsStore().getTopDoctors(3).filter(d => d.id !== doctor!.id).slice(0, 2)"
+                  v-for="d in similarDoctors"
                   :key="d.id"
                   :to="`/doctors/${d.id}`"
                   class="flex items-center gap-3 p-2 -mx-2 rounded-input hover:bg-gray-50 transition-colors"

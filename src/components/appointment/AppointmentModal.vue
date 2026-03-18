@@ -51,11 +51,13 @@ const canProceed = computed(() => {
 
 async function handleNext() {
   if (store.currentStep < 3) { store.nextStep(); return }
+  submitAttempted.value = true
   if (!step3Valid()) return
   await store.submitAppointment()
 }
 
 const stepLabels = ['Врач / Услуга', 'Дата и время', 'Ваши данные']
+const submitAttempted = ref(false)
 </script>
 
 <template>
@@ -209,7 +211,7 @@ const stepLabels = ['Врач / Услуга', 'Дата и время', 'Ваш
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="sm:col-span-2">
           <label class="text-sm font-semibold text-textPrimary mb-1.5 block">ФИО <span class="text-error">*</span></label>
-          <input v-model="store.patientData.name" placeholder="Иванов Иван Иванович" class="input-field" />
+          <input v-model="store.patientData.name" placeholder="Иванов Иван Иванович" :class="['input-field', submitAttempted && store.patientData.name.trim().length < 2 ? 'border-error' : '']" />
         </div>
         <div>
           <label class="text-sm font-semibold text-textPrimary mb-1.5 block">Телефон <span class="text-error">*</span></label>

@@ -5,7 +5,7 @@
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 $allowed = ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5186', 'http://127.0.0.1:5173'];
 
-if (in_array($origin, $allowed) || str_starts_with($origin, 'http://localhost:')) {
+if (in_array($origin, $allowed) || str_starts_with($origin, 'http://localhost:') || str_starts_with($origin, 'http://127.0.0.1:')) {
     header("Access-Control-Allow-Origin: $origin");
 } else {
     header("Access-Control-Allow-Origin: http://localhost:5173");

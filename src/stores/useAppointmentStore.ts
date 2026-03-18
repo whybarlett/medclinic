@@ -27,7 +27,15 @@ export const useAppointmentStore = defineStore('appointment', () => {
     isOpen.value = true
     isSuccess.value = false
     currentStep.value = 1
-    if (doctor) selectedDoctor.value = doctor
+    // Reset doctor only if opening fresh (no specific doctor passed)
+    if (doctor) {
+      selectedDoctor.value = doctor
+    } else if (!selectedDoctor.value) {
+      selectedDoctor.value = null
+    }
+    // Reset date/time on each open
+    selectedDate.value = null
+    selectedTime.value = null
     document.body.style.overflow = 'hidden'
   }
 

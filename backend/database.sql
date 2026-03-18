@@ -182,9 +182,11 @@ CREATE TABLE `admins` (
   `created_at` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- Пароль: 1234 (хэш bcrypt)
+-- Пароль: 1234
+-- Для генерации хэша выполни в PHP: echo password_hash('1234', PASSWORD_BCRYPT);
+-- Или используй следующий pre-generated bcrypt hash для '1234':
 INSERT INTO `admins` (`username`,`password`,`name`) VALUES
-('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Главный администратор');
+('admin', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWu', 'Главный администратор');
 
 -- ──────────────────────────────────────────────
 -- Записи на приём

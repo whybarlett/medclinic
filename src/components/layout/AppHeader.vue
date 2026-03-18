@@ -181,7 +181,7 @@ function isActiveRoute(path: string) {
       <!-- Right actions -->
       <div class="flex items-center gap-2">
         <!-- Search -->
-        <button @click="isSearchOpen = true" class="p-2 rounded-btn hover:bg-gray-100 transition-colors text-textSecondary hover:text-primary" aria-label="Поиск">
+        <button @click="isSearchOpen = true" :aria-expanded="isSearchOpen" class="p-2 rounded-btn hover:bg-gray-100 transition-colors text-textSecondary hover:text-primary" aria-label="Поиск">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         </button>
         <AppButton @click="appointmentStore.openModal()" size="sm" class="hidden sm:inline-flex">

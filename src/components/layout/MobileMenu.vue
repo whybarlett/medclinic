@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAppointmentStore } from '../../stores/useAppointmentStore'
 import AppButton from '../ui/AppButton.vue'
 
+const route = useRoute()
 const props = defineProps<{ isOpen: boolean }>()
+watch(() => route.path, () => emit('close'))
 const emit = defineEmits<{ close: [] }>()
 const appointmentStore = useAppointmentStore()
 
