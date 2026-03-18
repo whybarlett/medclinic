@@ -4,6 +4,7 @@ import AppHeader from './components/layout/AppHeader.vue'
 import AppFooter from './components/layout/AppFooter.vue'
 import FloatingWidgets from './components/layout/FloatingWidgets.vue'
 import AppointmentModal from './components/appointment/AppointmentModal.vue'
+import LoginModal from './components/auth/LoginModal.vue'
 import { useRegionStore } from './stores/useRegionStore'
 
 const regionStore = useRegionStore()
@@ -21,6 +22,7 @@ onMounted(() => { regionStore.detectRegion() })
     <AppFooter />
     <FloatingWidgets />
     <AppointmentModal />
+    <LoginModal />
   </div>
 </template>
 

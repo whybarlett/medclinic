@@ -69,6 +69,12 @@ const routes: RouteRecordRaw[] = [
     meta: { title: 'Статья — МедЦентр' },
   },
   {
+    path: '/cabinet',
+    name: 'cabinet',
+    component: () => import('../pages/CabinetPage.vue'),
+    meta: { title: 'Личный кабинет — МедЦентр' },
+  },
+  {
     path: '/about',
     name: 'about',
     component: () => import('../pages/AboutPage.vue'),

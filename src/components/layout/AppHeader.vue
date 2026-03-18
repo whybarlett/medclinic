@@ -4,6 +4,7 @@ import { useScroll } from '@vueuse/core'
 import { useRouter, useRoute } from 'vue-router'
 import { useRegionStore } from '../../stores/useRegionStore'
 import { useAppointmentStore } from '../../stores/useAppointmentStore'
+import { useUserStore } from '../../stores/useUserStore'
 import { mockServiceCategories } from '../../mocks/index'
 import AppButton from '../ui/AppButton.vue'
 import MobileMenu from './MobileMenu.vue'
@@ -12,6 +13,7 @@ const router = useRouter()
 const route = useRoute()
 const regionStore = useRegionStore()
 const appointmentStore = useAppointmentStore()
+const userStore = useUserStore()
 
 const { y } = useScroll(window)
 const isScrolled = computed(() => y.value > 20)
@@ -87,7 +89,12 @@ function isActiveRoute(path: string) {
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
             {{ regionStore.currentRegion.phone }}
           </a>
-          <button class="text-textSecondary hover:text-primary transition-colors flex items-center gap-1">
+          <RouterLink v-if="userStore.isAuthenticated" to="/cabinet" class="flex items-center gap-1.5 text-textSecondary hover:text-primary transition-colors relative">
+            <div class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-bold">{{ userStore.profile.name.charAt(0) }}</div>
+            <span>{{ userStore.profile.name.split(' ')[0] }}</span>
+            <span v-if="userStore.unreadNotifications > 0" class="absolute -top-1 -right-1 w-4 h-4 bg-error text-white text-[9px] font-bold rounded-full flex items-center justify-center">{{ userStore.unreadNotifications }}</span>
+          </RouterLink>
+          <button v-else @click="userStore.openLoginModal()" class="text-textSecondary hover:text-primary transition-colors flex items-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
             Личный кабинет
           </button>
