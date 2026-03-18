@@ -68,7 +68,7 @@ export const mockClinics: Clinic[] = [
     city: 'Томск',
     phone: '+7 (3822) 56-78-90',
     email: 'mira@medclinic.ru',
-    coordinates: [56.4830, 84.9380],
+    coordinates: [56.4830, 84.9620],
     workingHours: { 'Пн–Пт': '8:00–22:00', 'Сб–Вс': '9:00–20:00' },
     photo: 'https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=600',
     rating: 4.8,
