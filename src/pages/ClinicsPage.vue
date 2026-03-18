@@ -11,6 +11,7 @@ const appointmentStore = useAppointmentStore()
 const breadcrumbs = [{ label: 'Главная', to: '/' }, { label: 'Клиники' }]
 const selectedClinic = ref<Clinic>(mockClinics[0])
 const showMap = ref(false)
+const mapReady = ref(false)
 
 let map: any = null
 let L: any = null
@@ -30,9 +31,15 @@ async function initMap() {
     map = L.map(mapEl.value, { scrollWheelZoom: false }).setView([56.484, 84.948], 12)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map)
     mockClinics.forEach(c => {
-      const icon = L.divIcon({ html: `<div style="width:28px;height:28px;background:#003D9C;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 2px 8px rgba(0,61,156,0.4)"></div>`, iconSize: [28, 28], iconAnchor: [14, 28], className: '' })
+      const icon = L.divIcon({
+        html: `<div style="width:28px;height:28px;background:#003D9C;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid white;box-shadow:0 2px 8px rgba(0,61,156,0.4)"></div>`,
+        iconSize: [28, 28],
+        iconAnchor: [14, 28],
+        className: '',
+      })
       L.marker(c.coordinates, { icon }).addTo(map).on('click', () => { selectedClinic.value = c })
     })
+    mapReady.value = true
   } catch(e) { console.warn('map fail', e) }
 }
 
@@ -55,7 +62,10 @@ async function toggleMap() {
             <h1 class="text-2xl md:text-3xl font-bold text-textPrimary">Клиники МедЦентр</h1>
             <p class="text-textSecondary text-sm mt-1">{{ mockClinics.length }} клиник в Томске</p>
           </div>
-          <button @click="toggleMap" :class="['flex items-center gap-2 px-4 py-2.5 border-2 rounded-btn text-sm font-semibold transition-colors', showMap ? 'border-primary bg-primary text-white' : 'border-border text-textPrimary hover:border-primary']">
+          <button
+            @click="toggleMap"
+            :class="['flex items-center gap-2 px-4 py-2.5 border-2 rounded-btn text-sm font-semibold transition-colors', showMap ? 'border-primary bg-primary text-white' : 'border-border text-textPrimary hover:border-primary']"
+          >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
             {{ showMap ? 'Скрыть карту' : 'На карте' }}
           </button>
@@ -64,10 +74,17 @@ async function toggleMap() {
     </div>
 
     <div class="container-custom py-8">
-      <!-- Map (toggle) -->
+      <!-- Map — isolation:isolate запирает z-индексы Leaflet внутри контейнера -->
       <Transition name="expand">
-        <div v-if="showMap" class="mb-8 rounded-card overflow-hidden shadow-card h-80 bg-gray-100">
-          <div ref="mapEl" class="w-full h-full" />
+        <div
+          v-if="showMap"
+          class="mb-8 shadow-card bg-gray-100"
+          style="position: relative; isolation: isolate; height: 320px; border-radius: 16px; overflow: hidden;"
+        >
+          <div ref="mapEl" style="width: 100%; height: 100%;" />
+          <div v-if="!mapReady" class="absolute inset-0 flex items-center justify-center bg-gray-100 pointer-events-none">
+            <p class="text-sm text-textSecondary">Загрузка карты...</p>
+          </div>
         </div>
       </Transition>
 
@@ -82,7 +99,6 @@ async function toggleMap() {
               <h3 class="font-bold text-textPrimary group-hover:text-primary transition-colors">{{ clinic.name }}</h3>
               <AppRating :rating="clinic.rating" :count="clinic.reviewsCount" size="sm" class="flex-shrink-0" />
             </div>
-
             <div class="space-y-1.5 text-sm mb-4">
               <div class="flex items-center gap-2 text-textSecondary">
                 <svg class="w-4 h-4 text-secondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
@@ -101,7 +117,6 @@ async function toggleMap() {
                 {{ clinic.phone }}
               </a>
             </div>
-
             <div class="flex gap-2">
               <AppButton size="sm" @click="appointmentStore.openModal()" class="flex-1">Записаться</AppButton>
               <RouterLink :to="`/clinics/${clinic.id}`" class="flex-1 flex items-center justify-center px-4 py-2 border-2 border-border rounded-btn text-sm font-semibold text-textPrimary hover:border-primary hover:text-primary transition-colors">Подробнее</RouterLink>

@@ -12,13 +12,13 @@ let L: any = null
 let markers: any[] = []
 
 const mapEl = ref<HTMLElement | null>(null)
+const mapReady = ref(false)
 
 async function initMap() {
   if (!mapEl.value || map) return
   try {
     L = await import('leaflet')
     await import('leaflet/dist/leaflet.css')
-    // Fix default icon paths
     delete (L.Icon.Default.prototype as any)._getIconUrl
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
@@ -50,6 +50,7 @@ async function initMap() {
       marker.on('click', () => { selectedClinic.value = clinic })
       markers.push(marker)
     })
+    mapReady.value = true
   } catch (e) {
     console.warn('Map init failed', e)
   }
@@ -77,8 +78,8 @@ onUnmounted(() => { if (map) { map.remove(); map = null } })
         </AppButton>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 min-h-[480px]">
-        <!-- Sidebar: clinic list -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-6" style="min-height: 480px;">
+        <!-- Sidebar -->
         <div class="lg:col-span-2 flex flex-col gap-3 max-h-[480px] overflow-y-auto pr-1 scrollbar-hide">
           <button
             v-for="clinic in mockClinics"
@@ -105,7 +106,6 @@ onUnmounted(() => { if (map) { map.remove(); map = null } })
               </div>
               <div v-if="selectedClinic.id === clinic.id" class="w-2 h-2 rounded-full bg-primary flex-shrink-0 mt-1" />
             </div>
-            <!-- Working hours (show on active) -->
             <Transition name="expand">
               <div v-if="selectedClinic.id === clinic.id" class="mt-3 pt-3 border-t border-primary/20 space-y-1">
                 <p v-for="(hours, day) in clinic.workingHours" :key="day" class="text-xs flex justify-between">
@@ -120,11 +120,13 @@ onUnmounted(() => { if (map) { map.remove(); map = null } })
           </button>
         </div>
 
-        <!-- Map -->
-        <div class="lg:col-span-3 rounded-card overflow-hidden min-h-[360px] bg-gray-100 relative shadow-card">
-          <div ref="mapEl" class="w-full h-full min-h-[360px]" />
-          <!-- Map loading fallback -->
-          <div v-if="!map" class="absolute inset-0 flex items-center justify-center bg-gray-100">
+        <!-- Map — isolation:isolate создаёт свой stacking context -->
+        <div
+          class="lg:col-span-3 rounded-card shadow-card bg-gray-100"
+          style="position: relative; isolation: isolate; min-height: 360px; overflow: hidden;"
+        >
+          <div ref="mapEl" style="width: 100%; height: 100%; min-height: 360px;" />
+          <div v-if="!mapReady" class="absolute inset-0 flex items-center justify-center bg-gray-100 pointer-events-none">
             <div class="text-center text-textSecondary">
               <svg class="w-12 h-12 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
               <p class="text-sm">Загрузка карты...</p>

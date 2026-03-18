@@ -122,3 +122,30 @@
   border-radius: 5px !important;
   transition: width 0.3s ease !important;
 }
+
+/* ── Leaflet z-index fix ──────────────────────────────────────
+   Leaflet использует z-index 200–800 внутри своих pane-слоёв.
+   isolation:isolate на контейнере создаёт stacking context,
+   но popup и tooltip рендерятся в body — фиксируем их тоже. */
+.leaflet-container {
+  z-index: 0;
+}
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-pane,
+.leaflet-overlay-pane,
+.leaflet-shadow-pane,
+.leaflet-marker-pane,
+.leaflet-tooltip-pane,
+.leaflet-popup-pane {
+  z-index: auto;
+}
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 10;
+}
+.leaflet-popup {
+  z-index: 20;
+}
