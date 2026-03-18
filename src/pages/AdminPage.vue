@@ -148,7 +148,7 @@ const statusColor: Record<string, string> = {
       </div>
 
       <div class="mt-5 bg-primary-50 rounded-input p-3 text-center">
-        <p class="text-xs text-primary font-medium">💡 Логин: <b>admin</b> · Пароль: <b>admin123</b></p>
+        <p class="text-xs text-primary font-medium">💡 Логин: <b>admin</b> · Пароль: <b>1234</b></p>
       </div>
     </div>
   </main>

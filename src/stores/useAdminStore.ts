@@ -28,7 +28,7 @@ export interface AdminAppointment {
 }
 
 const ADMIN_LOGIN = 'admin'
-const ADMIN_PASSWORD = 'admin123'
+const ADMIN_PASSWORD = '1234'
 
 const mockAdminAppointments: AdminAppointment[] = [
   { id: 1, patientName: 'Иванов Алексей', patientPhone: '+7 (922) 111-22-33', doctorName: 'Иванова Елена Сергеевна', doctorSpecialty: 'Кардиолог', clinicName: 'МедЦентр на Ленина', date: '2026-03-25', time: '10:30', status: 'upcoming', price: 3200 },
