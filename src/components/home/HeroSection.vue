@@ -72,62 +72,61 @@ function doSearch() {
       class="h-full"
     >
       <SwiperSlide v-for="slide in slides" :key="slide.id" class="relative">
-        <!-- Background image -->
+        <!-- Background -->
         <div class="absolute inset-0">
           <img :src="slide.image" :alt="slide.title" class="w-full h-full object-cover" loading="eager" />
           <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
         </div>
-        <!-- Content -->
-        <div class="relative z-10 h-full flex items-center">
-          <div class="container-custom w-full">
-            <div class="max-w-2xl pb-24 md:pb-28">
+
+        <!-- Content: заголовок + кнопка + поиск в одном потоке -->
+        <div class="relative z-10 h-full flex flex-col justify-center">
+          <div class="container-custom">
+            <div class="max-w-2xl">
+              <!-- Заголовок -->
               <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 text-balance">
                 {{ slide.title }}
               </h1>
-              <p class="text-white/80 text-lg md:text-xl mb-8 leading-relaxed">
+              <p class="text-white/80 text-lg md:text-xl mb-6 leading-relaxed">
                 {{ slide.subtitle }}
               </p>
-              <AppButton @click="appointmentStore.openModal()" size="lg">
+              <!-- Кнопка -->
+              <AppButton @click="appointmentStore.openModal()" size="lg" class="mb-6">
                 {{ slide.cta }}
               </AppButton>
+
+              <!-- Поисковый блок — сразу под кнопкой -->
+              <div class="bg-white/95 backdrop-blur-sm rounded-card shadow-2xl p-4">
+                <div class="flex flex-col sm:flex-row gap-3">
+                  <div class="flex-1 flex items-center gap-3 bg-gray-50 rounded-input px-4 py-3 border border-border">
+                    <svg class="w-5 h-5 text-textSecondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input
+                      v-model="searchQuery"
+                      @keydown.enter="doSearch"
+                      placeholder="Введите услугу или имя врача..."
+                      class="flex-1 bg-transparent outline-none text-textPrimary placeholder-gray-400 text-sm"
+                    />
+                  </div>
+                  <AppButton @click="doSearch" class="sm:flex-shrink-0">
+                    Найти
+                  </AppButton>
+                </div>
+                <div class="flex items-center gap-2 mt-3 flex-wrap">
+                  <span class="text-xs text-textSecondary">Быстрый выбор:</span>
+                  <RouterLink
+                    v-for="link in quickLinks"
+                    :key="link.label"
+                    :to="link.to"
+                    class="flex items-center gap-1 px-2.5 py-1 bg-primary-50 text-primary text-xs rounded-full hover:bg-primary hover:text-white transition-colors font-medium"
+                  >
+                    {{ link.icon }} {{ link.label }}
+                  </RouterLink>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
       </SwiperSlide>
     </Swiper>
-
-    <!-- Floating search box -->
-    <div class="absolute bottom-0 left-0 right-0 z-20">
-      <div class="container-custom pb-4">
-        <div class="bg-white/95 backdrop-blur-sm rounded-card shadow-2xl p-4 max-w-2xl">
-          <div class="flex flex-col sm:flex-row gap-3">
-            <div class="flex-1 flex items-center gap-3 bg-gray-50 rounded-input px-4 py-3 border border-border">
-              <svg class="w-5 h-5 text-textSecondary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-              <input
-                v-model="searchQuery"
-                @keydown.enter="doSearch"
-                placeholder="Введите услугу или имя врача..."
-                class="flex-1 bg-transparent outline-none text-textPrimary placeholder-gray-400 text-sm"
-              />
-            </div>
-            <AppButton @click="doSearch" class="sm:flex-shrink-0">
-              Найти
-            </AppButton>
-          </div>
-          <!-- Quick links -->
-          <div class="flex items-center gap-2 mt-3 flex-wrap">
-            <span class="text-xs text-textSecondary">Быстрый выбор:</span>
-            <RouterLink
-              v-for="link in quickLinks"
-              :key="link.label"
-              :to="link.to"
-              class="flex items-center gap-1 px-2.5 py-1 bg-primary-50 text-primary text-xs rounded-full hover:bg-primary hover:text-white transition-colors font-medium"
-            >
-              {{ link.icon }} {{ link.label }}
-            </RouterLink>
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 </template>
